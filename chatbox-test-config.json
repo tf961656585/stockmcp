@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "stock-mcp": {
+      "command": "node",
+      "args": ["d:/软件/网页下载/stockmcp/dist/index.js"],
+      "cwd": "d:/软件/网页下载/stockmcp"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "alltick-stock-mcp": {
+      "command": "node",
+      "args": ["d:/软件/网页下载/stockmcp/dist/index.js"],
+      "cwd": "d:/软件/网页下载/stockmcp",
+      "env": {
+        "NODE_ENV": "production",
+        "ALLTICK_TOKEN": "7e85f7b81dde85d3547d963e3464c329-c-app"
+      }
+    }
+  }
+}
