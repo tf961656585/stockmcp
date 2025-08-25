@@ -43,7 +43,9 @@ npm run build
 npm start
 ```
 
-## ChatBox 配置（示例）
+## ChatBox 一键配置（复制即用）
+
+将以下 JSON 粘贴到 ChatBox 的 MCP 配置中即可使用（使用通用占位路径，按需替换为你的实际路径）：
 
 ```json
 {
@@ -53,14 +55,19 @@ npm start
       "args": ["./dist/index.js"],
       "cwd": "D:/path/to/stockmcp",
       "env": {
-        "ALLTICK_TOKEN": "your_token_here",
+        "ALLTICK_TOKEN": "your_alltick_token_here",
         "ALLTICK_RATE_MS": "11000",
-        "JUHE_API_KEY": "your_juhe_key"
+        "JUHE_API_KEY": "your_juhe_api_key_here"
       }
     }
   }
 }
 ```
+
+说明：
+- 必填 `ALLTICK_TOKEN`（AllTick 授权令牌）。
+- 可选 `ALLTICK_RATE_MS` 默认 11000ms（免费档建议保留）。
+- 可选 `JUHE_API_KEY` 启用财经新闻工具（聚合数据）。
 
 ## 支持的工具
 

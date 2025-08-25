@@ -1,5 +1,31 @@
 # ChatBox MCP 配置文件使用说明
+## ChatBox 配置指南（精简版）
 
+只需要一份配置即可：打开 ChatBox -> 设置 -> MCP，粘贴下方 JSON（使用通用占位路径，请替换为你的实际路径）：
+
+```json
+{
+	"mcpServers": {
+			"alltick-stock-mcp": {
+				"command": "node",
+				"args": ["./dist/index.js"],
+				"cwd": "D:/path/to/stockmcp",
+			"env": {
+				"ALLTICK_TOKEN": "your_alltick_token_here",
+				"ALLTICK_RATE_MS": "11000",
+				"JUHE_API_KEY": "your_juhe_api_key_here"
+			}
+		}
+	}
+}
+```
+
+参数说明：
+- ALLTICK_TOKEN：必填，AllTick 授权令牌。
+- ALLTICK_RATE_MS：可选，默认 11000ms。免费档建议≥11000 规避限频。
+- JUHE_API_KEY：可选，启用财经新闻工具（聚合数据）。
+
+提示：若你使用非英文路径或路径包含空格，保持 `cwd` 与 `args` 中路径一致即可（示例为通用占位路径）。
 本项目提供了多个ChatBox MCP配置文件，用于不同的使用场景：
 
 注意：请基于同名的 `*.example.json` 复制生成本地配置文件（例如：将 `chatbox-mcp-config.example.json` 复制为 `chatbox-mcp-config.json`）。实际的本地配置文件已被 `.gitignore` 忽略，请勿提交到仓库。
