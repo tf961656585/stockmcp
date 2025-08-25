@@ -38,6 +38,7 @@ pids/
 # Local configs and internal docs (do not publish)
 docs/summarys/
 .github/instructions/
+.codebuddy/
 
 # Local Chatbox configs (keep only *.example.json in repo)
 chatbox-*.json

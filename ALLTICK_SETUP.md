@@ -1,59 +1,57 @@
 # AllTick MCP 服务器配置示例
 
-## 环境变量设置
+## 环境变量（必填/可选）
 
-在运行服务器之前，您需要设置以下环境变量：
+在运行前设置：
 
-```bash
-# Windows PowerShell
-$env:ALLTICK_TOKEN="your_alltick_token_here"
+```powershell
+# 必填：AllTick 授权令牌
+$env:ALLTICK_TOKEN = "your_alltick_token_here"
 
-# Windows CMD
-set ALLTICK_TOKEN=your_alltick_token_here
+# 可选：全局最小请求间隔（毫秒），免费档建议 11000ms
+$env:ALLTICK_RATE_MS = "11000"
 
-# Linux/macOS
-export ALLTICK_TOKEN="your_alltick_token_here"
+# 可选：若启用财经新闻工具（聚合数据）
+$env:JUHE_API_KEY = "your_juhe_api_key_here"
 ```
 
 ## AllTick Token 获取
 
-请访问以下链接获取免费的 AllTick token：
+申请地址：
 https://github.com/alltick/alltick-realtime-forex-crypto-stock-tick-finance-websocket-api/blob/main/token_application_cn.md
 
 ## 运行服务器
 
-```bash
-# 设置环境变量后运行
+```powershell
 npm run build
 npm start
 ```
 
 ## ChatBox MCP 配置示例
 
-在 ChatBox 中添加此 MCP 服务器配置：
-
 ```json
 {
   "name": "AllTick股票数据",
   "command": "node",
   "args": ["./dist/index.js"],
-  "cwd": "D:\\软件\\网页下载\\stockmcp",
+  "cwd": "D:/软件/网页下载/stockmcp",
   "env": {
-    "ALLTICK_TOKEN": "your_alltick_token_here"
+    "ALLTICK_TOKEN": "your_alltick_token_here",
+    "ALLTICK_RATE_MS": "11000",
+    "JUHE_API_KEY": "your_juhe_api_key_here"
   }
 }
 ```
 
-## 支持的功能
+## 提供能力（概览）
 
-- 获取主要股指数据（上证、深证、创业板等）
-- 获取实时市场数据
-- 获取 K 线数据
-- 获取股票基本信息
-- 市场概览和分析
+- 指数/ETF/行业/概念 等聚合数据
+- 实时行情与日线 K 线
+- 市场概览、市场情绪、结构分析
+- 龙虎榜、资金流、期指基差
+- 财经新闻（需 JUHE_API_KEY）
 
 ## 注意事项
 
-- AllTick 提供免费的 API 配额，超出后需要付费
-- 请合理使用 API 调用频率
-- 如需更多数据类型（如板块、概念等），可能需要额外的数据源或付费升级
+- 免费配额下应控制请求频率（建议 11000ms/次）
+- 错误码与限频说明参见 AllTick 官方文档

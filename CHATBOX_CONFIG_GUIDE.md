@@ -2,7 +2,9 @@
 
 本项目提供了多个ChatBox MCP配置文件，用于不同的使用场景：
 
-## 配置文件说明
+注意：请基于同名的 `*.example.json` 复制生成本地配置文件（例如：将 `chatbox-mcp-config.example.json` 复制为 `chatbox-mcp-config.json`）。实际的本地配置文件已被 `.gitignore` 忽略，请勿提交到仓库。
+
+## 配置文件说明（请基于 *.example.json 复制为本地文件）
 
 ### 1. `chatbox-mcp-config.json` (默认配置)
 - **用途**: 生产环境使用的基础配置
@@ -27,7 +29,7 @@
 
 ### 1. 构建项目
 在使用生产环境配置前，请先构建项目：
-```bash
+```powershell
 npm run build
 ```
 
@@ -38,19 +40,12 @@ npm run build
 4. 重启ChatBox
 
 ### 3. 验证配置
-导入配置后，您应该能看到以下MCP工具：
-- `get_realtime_market_data` - 获取实时市场数据
-- `get_capital_flow` - 获取资金流向数据
-- `get_dragon_tiger` - 获取龙虎榜数据
-- `get_concepts` - 获取概念板块数据
-- `get_etfs` - 获取ETF数据
-- `get_futures_basis` - 获取期货基差数据
-- `get_indices` - 获取指数数据
-- `get_sectors` - 获取行业板块数据
-- `get_market_overview` - 获取市场概览
-- `get_market_sentiment` - 获取市场情绪分析
-- `analyze_market_structure` - 分析市场结构
-- `get_data_quality_report` - 获取数据质量报告
+导入后可见的 MCP 工具（以实际版本为准）：
+- 指数与板块：`get_indices` `get_etfs` `get_sectors` `get_concepts`
+- 概览/情绪/结构：`get_market_overview` `get_market_sentiment` `analyze_market_structure`
+- 交易相关：`get_realtime_market_data` `get_capital_flow` `get_futures_basis` `get_dragon_tiger`
+- 质量与统计：`get_data_quality_report` `get_limit_breadth` `get_limit_streaks`
+- 新闻：`get_finance_news` `search_finance_news`（需 `JUHE_API_KEY`）
 
 ## 配置参数说明
 
@@ -60,8 +55,9 @@ npm run build
 - `cwd`: 工作目录路径
 
 ### 环境变量
-- `NODE_ENV`: 运行环境 (production/development)
-- `ALLTICK_TOKEN`: AllTick API访问令牌
+- `ALLTICK_TOKEN`（必填）：AllTick API 访问令牌
+- `ALLTICK_RATE_MS`（可选）：全局最小请求间隔（毫秒），默认 11000
+- `JUHE_API_KEY`（可选）：开启财经新闻工具所需
 
 ### 可选参数
 - `metadata`: 服务器元数据信息
@@ -75,9 +71,8 @@ npm run build
 - 验证配置文件路径是否正确
 
 ### 2. API调用失败
-- 确认AllTick Token是否有效
-- 检查网络连接
-- 查看ChatBox日志获取详细错误信息
+- 确认 `ALLTICK_TOKEN` 是否有效；免费档注意频率限制
+- 查看 ChatBox 日志；对照 AllTick 错误码定位问题
 
 ### 3. 权限问题
 - 确保ChatBox有访问配置文件的权限
@@ -87,4 +82,4 @@ npm run build
 
 如遇到问题，请参考：
 - AllTick API文档: https://github.com/alltick/alltick-realtime-forex-crypto-stock-tick-finance-websocket-api/blob/main/README_cn.md
-- 项目README文件
+- 项目 README 与 ALLTICK_SETUP

@@ -1,52 +1,49 @@
 # AllTick 股票数据 MCP 服务器
 
-基于 AllTick 数据源的实时股票市场数据 MCP（Model Context Protocol）服务器，为 AI 助手提供A股、港股、美股等金融数据接口。
+基于 AllTick 数据源的实时股票市场数据 MCP（Model Context Protocol）服务器，为 AI 助手提供 A 股及相关市场数据接口。
 
 ## 特性
 
-- 🚀 **实时数据**：提供实时股票行情、指数数据
-- 🌐 **多市场支持**：支持A股、港股、美股、加密货币、外汇等
-- 📊 **K线数据**：获取各种时间周期的K线数据
-- 🔒 **可靠数据源**：使用 AllTick 官方 API
-- 🆓 **免费使用**：AllTick 提供免费配额
+- 实时与日线级行情能力（统一使用 AllTick 官方 API）
+- 多市场代码兼容（.SH/.SZ 等）
+- 简洁稳定：内置串行节流，贴合免费配额
 
 ## 快速开始
 
-### 1. 获取 AllTick Token
+### 1) 获取 AllTick Token
 
-访问 [AllTick Token 申请页面](https://github.com/alltick/alltick-realtime-forex-crypto-stock-tick-finance-websocket-api/blob/main/token_application_cn.md) 申请免费 token。
+访问官方申请页面获取免费 token：
+https://github.com/alltick/alltick-realtime-forex-crypto-stock-tick-finance-websocket-api/blob/main/token_application_cn.md
 
-安全与开源注意：
-- 请勿在仓库内提交任何真实密钥或开发日志；本仓库已提供 `.env.example` 和 `chatbox-*.example.json` 示例文件供参考。
-- 运行前请复制 `.env.example` 为 `.env` 并填写：`ALLTICK_TOKEN`、可选 `ALLTICK_RATE_MS`、以及如需财经新闻的 `JUHE_API_KEY`。
-- Chatbox 配置建议复制 `chatbox-mcp-*.example.json` 为对应实际文件，并在本地填写环境变量；实际文件已被 `.gitignore` 忽略。
+### 2) 安装依赖
 
-### 2. 安装依赖
-
-```bash
+```powershell
 npm install
 ```
 
-### 3. 设置环境变量
+### 3) 设置环境变量（至少需要 ALLTICK_TOKEN）
 
-```bash
-# Windows PowerShell
+- 必填：ALLTICK_TOKEN – AllTick 授权令牌
+- 可选：ALLTICK_RATE_MS – 请求最小间隔（毫秒），默认 11000。免费档建议 ≥11000 以规避限频
+- 可选：JUHE_API_KEY – 若需启用财经新闻工具（聚合数据）
+
+示例（Windows PowerShell）：
+
+```powershell
 $env:ALLTICK_TOKEN="your_token_here"
-
-# Linux/macOS
-export ALLTICK_TOKEN="your_token_here"
+# 可选
+$env:ALLTICK_RATE_MS="11000"
+$env:JUHE_API_KEY="your_juhe_key"
 ```
 
-### 4. 构建和运行
+### 4) 构建与运行
 
-```bash
+```powershell
 npm run build
 npm start
 ```
 
-## ChatBox 配置
-
-在 ChatBox 中添加 MCP 服务器配置：
+## ChatBox 配置（示例）
 
 ```json
 {
@@ -54,9 +51,11 @@ npm start
     "alltick-stock-mcp": {
       "command": "node",
       "args": ["./dist/index.js"],
-      "cwd": "/path/to/stockmcp",
+      "cwd": "D:/path/to/stockmcp",
       "env": {
-        "ALLTICK_TOKEN": "your_token_here"
+        "ALLTICK_TOKEN": "your_token_here",
+        "ALLTICK_RATE_MS": "11000",
+        "JUHE_API_KEY": "your_juhe_key"
       }
     }
   }
@@ -65,21 +64,15 @@ npm start
 
 ## 支持的工具
 
-| 工具名称 | 描述 |
-|---------|------|
-| `get_indices` | 获取主要股指数据 |
-| `get_realtime_market_data` | 获取实时市场数据 |
-| `get_validated_market_data` | 获取验证过的市场数据 |
-| `get_data_quality_report` | 获取数据质量报告 |
-| `get_market_overview` | 获取市场概览 |
-| `get_market_sentiment` | 获取市场情绪 |
-| `get_etfs` | 获取ETF数据 |
-| `get_sectors` | 获取板块数据 |
-| `get_concepts` | 获取概念数据 |
-| `get_capital_flow` | 获取资金流数据 |
-| `get_futures_basis` | 获取期货数据 |
-| `get_dragon_tiger` | 获取龙虎榜数据 |
-| `analyze_market_structure` | 分析市场结构 |
+当前服务内置以下 MCP 工具（详见 `src/mcp`）：
+
+- get_indices, get_etfs, get_sectors, get_concepts
+- get_market_overview, get_market_sentiment
+- get_capital_flow, get_futures_basis, get_dragon_tiger
+- analyze_market_structure
+- get_realtime_market_data, get_data_quality_report
+- get_limit_breadth, get_limit_streaks
+- get_finance_news, search_finance_news（需 JUHE_API_KEY）
 
 ## 项目结构
 
@@ -106,11 +99,10 @@ stockmcp/
 - **GitHub**：https://github.com/alltick/alltick-realtime-forex-crypto-stock-tick-finance-websocket-api
 - **文档**：见 `DATA_SOURCES.md`
 
-## API 限制
+## 频率与配额
 
-- AllTick 提供免费配额，超出后需要付费
-- 请合理控制 API 调用频率
-- 详细限制请参考 [AllTick 接口限制说明](https://github.com/alltick/alltick-realtime-forex-crypto-stock-tick-finance-websocket-api/blob/main/http_interface/interface_limitation_cn.md)
+- 免费档建议将 ALLTICK_RATE_MS 设为 11000ms（每 ~11 秒 1 请求）
+- 超出配额会返回限频相关错误码，请参考官方错误码文档
 
 ## 开发指南
 
