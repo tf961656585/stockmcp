@@ -51,12 +51,15 @@ export const getRealtimeMarketDataTool: McpTool = {
         }] 
       };
     } catch (error) {
+      const e: any = error;
+      const extra = e?.alltick ? { allTickBody: e.alltick } : undefined;
       return { 
         content: [{ 
           type: 'text', 
           text: JSON.stringify({
             错误: '获取实时市场数据失败',
             详情: error instanceof Error ? error.message : '未知错误',
+            ...(extra ? { AllTick返回: extra.allTickBody } : {}),
             请求参数: {
               包含指数: includeIndices,
               包含ETF: includeETFs,

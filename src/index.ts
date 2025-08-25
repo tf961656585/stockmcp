@@ -29,6 +29,14 @@ class StockMCPServer {
     }
 
     this.dataFetcher = new AllTickDataFetcher(token);
+    // 允许通过环境变量调整速率（毫秒），便于根据套餐额度优化
+    const rateMsEnv = process.env.ALLTICK_RATE_MS;
+    if (rateMsEnv) {
+      const v = Number(rateMsEnv);
+      if (Number.isFinite(v) && v > 0) {
+        this.dataFetcher.setRequestInterval(v);
+      }
+    }
     this.setupToolHandlers();
     this.setupErrorHandling();
   }

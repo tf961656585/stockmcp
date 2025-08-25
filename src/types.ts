@@ -46,11 +46,7 @@ export interface AllTickStaticInfoResponse {
   ret: number;
   msg: string;
   data: {
-    symbol_list: Array<{
-      code: string;
-      name: string;
-      exchange: string;
-      type: string;
-    }>;
+  // 按官方文档：返回字段为 static_info_list，内部字段较多，这里使用宽松结构
+  static_info_list: Array<Record<string, any>>;
   };
 }

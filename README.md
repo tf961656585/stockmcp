@@ -16,6 +16,11 @@
 
 访问 [AllTick Token 申请页面](https://github.com/alltick/alltick-realtime-forex-crypto-stock-tick-finance-websocket-api/blob/main/token_application_cn.md) 申请免费 token。
 
+安全与开源注意：
+- 请勿在仓库内提交任何真实密钥或开发日志；本仓库已提供 `.env.example` 和 `chatbox-*.example.json` 示例文件供参考。
+- 运行前请复制 `.env.example` 为 `.env` 并填写：`ALLTICK_TOKEN`、可选 `ALLTICK_RATE_MS`、以及如需财经新闻的 `JUHE_API_KEY`。
+- Chatbox 配置建议复制 `chatbox-mcp-*.example.json` 为对应实际文件，并在本地填写环境变量；实际文件已被 `.gitignore` 忽略。
+
 ### 2. 安装依赖
 
 ```bash

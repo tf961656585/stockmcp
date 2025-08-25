@@ -35,6 +35,14 @@ pids/
 *.seed
 *.pid.lock
 
+# Local configs and internal docs (do not publish)
+docs/summarys/
+.github/instructions/
+
+# Local Chatbox configs (keep only *.example.json in repo)
+chatbox-*.json
+!chatbox-*.example.json
+
 # Coverage directory used by tools like istanbul
 coverage/
 *.lcov

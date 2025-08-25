@@ -11,6 +11,9 @@ import getDragonTiger from './get_dragon_tiger/index.js';
 import analyzeMarketStructure from './analyze_market_structure/index.js';
 import getRealtimeMarketData from './get_realtime_market_data/index.js';
 import getDataQualityReport from './get_data_quality_report/index.js';
+import getLimitBreadth from './get_limit_breadth/index.js';
+import getLimitStreaks from './get_limit_streaks/index.js';
+import financeNewsTools from './get_finance_news/index.js';
 
 export const tools: McpTool[] = [
   getMarketOverview,
@@ -25,6 +28,9 @@ export const tools: McpTool[] = [
   analyzeMarketStructure,
   getRealtimeMarketData,
   getDataQualityReport,
+  getLimitBreadth,
+  getLimitStreaks,
+  ...financeNewsTools,
 ];
 
 export * from './tooling.js';
