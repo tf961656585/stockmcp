@@ -1,30 +1,30 @@
-# 自动安装依赖并启动 MCP 服务（优先 dist，其次 tsx 直跑）
 param()
 
-$ErrorActionPreference = "Stop"
+# Auto install deps and start MCP server (prefer dist, fallback to tsx on TS sources)
+$ErrorActionPreference = 'Stop'
 
-# 切到仓库根目录（脚本位于 scripts/ 下）
+# Switch to repo root (this script is under scripts/)
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
 Write-Host "[start-mcp] Working directory: $repoRoot"
 
-# 如果缺少依赖则安装（优先 npm ci，否则回退 npm install）
-if (-not (Test-Path "node_modules")) {
-  if (Test-Path "package-lock.json") {
-    Write-Host "[start-mcp] node_modules 缺失，发现 package-lock.json，执行 npm ci…"
+# Ensure dependencies (prefer npm ci if package-lock exists)
+if (-not (Test-Path 'node_modules')) {
+  if (Test-Path 'package-lock.json') {
+    Write-Host '[start-mcp] node_modules missing, found package-lock.json -> running: npm ci'
     npm ci
   } else {
-    Write-Host "[start-mcp] node_modules 缺失，未发现 package-lock.json，执行 npm install…"
+    Write-Host '[start-mcp] node_modules missing, no package-lock.json -> running: npm install'
     npm install
   }
 }
 
-# 如果有 dist 优先用构建产物；否则使用 tsx 直跑 TS 源码
-if (Test-Path "dist/index.js") {
-  Write-Host "[start-mcp] 发现 dist/index.js，使用构建产物启动"
+# If dist exists, use build output; otherwise run TS directly with tsx
+if (Test-Path 'dist/index.js') {
+  Write-Host '[start-mcp] Using dist/index.js to start server'
   node .\dist\index.js
 } else {
-  Write-Host "[start-mcp] 未发现 dist，使用 tsx 直跑 src/index.ts"
-  npx -y tsx .\src\index.ts
+  Write-Host '[start-mcp] dist not found, using tsx to run src/index.ts'
+  npx tsx .\src\index.ts
 }
