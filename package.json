@@ -1,6 +1,6 @@
 {
   "name": "alltick-stock-mcp-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A股市场数据MCP服务器 - 基于AllTick数据源",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
