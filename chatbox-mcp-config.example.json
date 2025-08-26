@@ -1,8 +1,14 @@
 {
   "mcpServers": {
     "alltick-stock-mcp": {
-      "command": "node",
-  "args": ["./dist/index.js"],
+      "command": "powershell.exe",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-NoProfile",
+        "-File",
+        ".\\scripts\\start-mcp.ps1"
+      ],
   "cwd": "D:/path/to/stockmcp",
       "env": {
         "ALLTICK_TOKEN": "your_alltick_token_here",

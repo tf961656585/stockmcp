@@ -45,7 +45,32 @@ npm start
 
 ## ChatBox 一键配置（复制即用）
 
-将以下 JSON 粘贴到 ChatBox 的 MCP 配置中即可使用（使用通用占位路径，按需替换为你的实际路径）：
+方案 A：零构建直跑（推荐，免 dist）
+
+```json
+{
+  "mcpServers": {
+    "alltick-stock-mcp": {
+      "command": "powershell.exe",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-NoProfile",
+        "-File",
+        ".\\scripts\\start-mcp.ps1"
+      ],
+      "cwd": "D:/path/to/stockmcp",
+      "env": {
+        "ALLTICK_TOKEN": "your_alltick_token_here",
+        "ALLTICK_RATE_MS": "11000",
+        "JUHE_API_KEY": "your_juhe_api_key_here"
+      }
+    }
+  }
+}
+```
+
+方案 B：已构建后使用 dist：
 
 ```json
 {
@@ -68,6 +93,7 @@ npm start
 - 必填 `ALLTICK_TOKEN`（AllTick 授权令牌）。
 - 可选 `ALLTICK_RATE_MS` 默认 11000ms（免费档建议保留）。
 - 可选 `JUHE_API_KEY` 启用财经新闻工具（聚合数据）。
+ - 方案 A 首次运行会自动安装依赖（npm ci）并用 tsx 启动；后续若你执行了 `npm run build`，脚本会自动切换到 dist 运行。
 
 ## 支持的工具
 
