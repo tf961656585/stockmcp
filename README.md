@@ -36,49 +36,45 @@ $env:ALLTICK_RATE_MS="11000"
 $env:JUHE_API_KEY="your_juhe_key"
 ```
 
-### 4) 构建与运行
+### 4) 构建与运行（本地源码方式）
 
 ```powershell
 npm run build
 npm start
 ```
 
-## ChatBox 一键配置（复制即用）
+### 5) 通过 npm/npx 一键运行（推荐给使用者）
 
-方案 A：零构建直跑（推荐，免 dist）
+无需克隆仓库，直接用 npx 运行已发布的 CLI（需 Node.js >= 18.17）：
 
-```json
-{
-  "mcpServers": {
-    "alltick-stock-mcp": {
-      "command": "powershell.exe",
-      "args": [
-        "-ExecutionPolicy",
-        "Bypass",
-        "-NoProfile",
-        "-File",
-        ".\\scripts\\start-mcp.ps1"
-      ],
-      "cwd": "D:/path/to/stockmcp",
-      "env": {
-        "ALLTICK_TOKEN": "your_alltick_token_here",
-        "ALLTICK_RATE_MS": "11000",
-        "JUHE_API_KEY": "your_juhe_api_key_here"
-      }
-    }
-  }
-}
+```powershell
+# 设置必要环境变量
+$env:ALLTICK_TOKEN = "your_alltick_token_here"
+# 可选
+$env:ALLTICK_RATE_MS = "11000"
+$env:JUHE_API_KEY = "your_juhe_api_key_here"
+
+# 直接启动（自动下载并运行；固定版本避免拉取旧包）
+npx -y alltick-stock-mcp-server@1.0.2
 ```
 
-方案 B：已构建后使用 dist：
+也可以全局安装后运行：
+
+```powershell
+npm i -g alltick-stock-mcp-server
+stock-mcp
+```
+
+## ChatBox 一键配置（复制即用）
+
+推荐：使用 npx（无需克隆仓库，最简配置，建议固定版本）
 
 ```json
 {
   "mcpServers": {
     "alltick-stock-mcp": {
-      "command": "node",
-      "args": ["./dist/index.js"],
-      "cwd": "D:/path/to/stockmcp",
+      "command": "npx",
+      "args": ["-y", "alltick-stock-mcp-server@1.0.2"],
       "env": {
         "ALLTICK_TOKEN": "your_alltick_token_here",
         "ALLTICK_RATE_MS": "11000",
@@ -93,7 +89,8 @@ npm start
 - 必填 `ALLTICK_TOKEN`（AllTick 授权令牌）。
 - 可选 `ALLTICK_RATE_MS` 默认 11000ms（免费档建议保留）。
 - 可选 `JUHE_API_KEY` 启用财经新闻工具（聚合数据）。
- - 方案 A 首次运行会自动安装依赖（npm ci）并用 tsx 启动；后续若你执行了 `npm run build`，脚本会自动切换到 dist 运行。
+- 为避免 npx 拉取旧包，建议固定版本号（例如 `@1.0.2`）。
+- 若需本地源码方式运行，请参考上文“快速开始”的构建与运行章节。
 
 ## 支持的工具
 

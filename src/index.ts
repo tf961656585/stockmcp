@@ -9,8 +9,9 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { AllTickDataFetcher } from './alltick-data-fetcher.js';
 import { tools as mcpTools, ToolContext } from './mcp/index.js';
+import { pathToFileURL } from 'node:url';
 
-class StockMCPServer {
+export class StockMCPServer {
   private server: Server;
   private dataFetcher: AllTickDataFetcher;
 
@@ -251,5 +252,25 @@ ${this.analyzeRisk(data)}
   }
 }
 
-const server = new StockMCPServer();
-server.run().catch(console.error);
+export async function runCli() {
+  const server = new StockMCPServer();
+  await server.run();
+}
+
+// 仅当作为可执行脚本启动时才运行（被 import 时不自动启动），且允许通过环境变量禁用
+try {
+  const isDirectRun = import.meta &&
+    typeof process !== 'undefined' &&
+    process.argv &&
+    process.argv[1] &&
+    import.meta.url === pathToFileURL(process.argv[1]).href;
+  const autorunEnabled = !process.env.STOCK_MCP_DISABLE_AUTORUN;
+  if (isDirectRun && autorunEnabled) {
+    runCli().catch((e) => {
+      console.error(e);
+      process.exit(1);
+    });
+  }
+} catch {
+  // ignore
+}

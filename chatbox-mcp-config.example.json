@@ -1,15 +1,8 @@
 {
   "mcpServers": {
     "alltick-stock-mcp": {
-      "command": "powershell.exe",
-      "args": [
-        "-ExecutionPolicy",
-        "Bypass",
-        "-NoProfile",
-        "-File",
-        ".\\scripts\\start-mcp.ps1"
-      ],
-  "cwd": "D:/path/to/stockmcp",
+      "command": "npx",
+  "args": ["-y", "alltick-stock-mcp-server@1.0.2"],
       "env": {
         "ALLTICK_TOKEN": "your_alltick_token_here",
         "ALLTICK_RATE_MS": "11000",
